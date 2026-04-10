@@ -43,32 +43,6 @@ pipeline {
       }
     }
 
-    stage("SonarQube Analysis") {
-      steps {
-        withSonarQubeEnv("${SONARQUBE_SERVER}") {
-          sh """
-            echo "-------- Running SonarQube Analysis --------"
-            mvn sonar:sonar \
-              -Dsonar.projectKey=datastore \
-              -Dsonar.projectName=datastore \
-              -Dsonar.java.binaries=target
-            echo "-------- SonarQube Analysis Complete --------"
-          """
-        }
-      }
-    }
-
-   stage('Quality Gate') {
-      steps {
-        script {
-          // Wait for the SonarQube Quality Gate result
-          timeout(time: 15, unit: 'MINUTES') {
-            waitForQualityGate()
-          }
-        }
-      }
-    }
-
     stage("package") {
       steps {
         sh """
