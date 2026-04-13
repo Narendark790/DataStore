@@ -6,13 +6,13 @@ pipeline {
   }
 
   environment {
-    DOCKERHUB_CREDENTIALS=credentials("dockerhub")
+    DOCKERHUB_CREDENTIALS=credentials("docker-hub")
   }
 
   stages {
     stage("Checkout") {
       steps {
-        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Chakrapaniguruvu8/DataStore.git']])
+        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Narendark790/DataStore.git']])
       }
     }
     stage("Maven Build") {
@@ -37,7 +37,7 @@ pipeline {
       steps {
         sh """
           echo "-------- Pushing Artifacts To S3 --------"
-          aws s3 cp ./target/*.jar s3://s3-bucket-for-datadftore-jenkins-artifactory/
+          aws s3 cp ./target/*.jar s3://naredhoni1415/
           echo "-------- Pushing Artifacts To S3 Completed --------"
         """
       }
@@ -64,7 +64,7 @@ pipeline {
       steps{
         sh """
           echo "-------- Tagging Docker Image --------"
-          docker tag datastore:"${App_Version}" chakrapaniguruvu8/datastore:"${App_Version}"
+          docker tag datastore:"${App_Version}" narendar790/datastore:"${App_Version}"
           echo "-------- Tagging Docker Image Completed."
         """
       }
@@ -77,7 +77,7 @@ pipeline {
           echo "-------- DockerHub Login Successful --------"
 
           echo "-------- Pushing Docker Image To DockerHub --------"
-         docker push chakrapaniguruvu8/datastore:"${App_Version}"
+         docker push narendar790/datastore:"${App_Version}"
           echo "-------- Docker Image Pushed Successfully --------"
         """
       }
