@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage("Checkout") {
       steps {
-        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/shivagande26/DataStore.git']])
+        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Chakrapaniguruvu8/DataStore.git']])
       }
     }
     stage("Maven Build") {
@@ -37,7 +37,7 @@ pipeline {
       steps {
         sh """
           echo "-------- Pushing Artifacts To S3 --------"
-          aws s3 cp ./target/*.jar s3://datastore-artefact-store-jenkins-apps-app/
+          aws s3 cp ./target/*.jar s3://s3-bucket-for-datadftore-jenkins-artifactory/
           echo "-------- Pushing Artifacts To S3 Completed --------"
         """
       }
